@@ -3,7 +3,11 @@
 
 To get started using this API follow the instructions below.
 
-### Installing
+## Note
+You need to have a correct version of chromedriver in your corresponding python interpreter path for the script to work.
+Download chromedrivers [here](https://chromedriver.chromium.org/downloads/version-selection)
+
+## Installing
 
 Create a conda environment
 ```sh
