@@ -1,6 +1,7 @@
 from selenium.webdriver import Chrome
 from selenium.webdriver import ChromeOptions
 from selenium.webdriver import ActionChains
+from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -37,14 +38,14 @@ def click_on_captcha(driver, action, coordininates):
         print(x)
         print(y)
         image = driver.find_element(by="xpath", value='//*[@id="captcha_click_image"]')
-        action.move_to_element_with_offset(image, 100, 100).click().perform()
-        break
-        #sleep_duration = random.uniform(1, 1.5)
-        #time.sleep(sleep_duration)
+        action.move_to_element_with_offset(image, x, y).click().perform()
+        sleep_duration = random.uniform(1, 1.5)
+        time.sleep(sleep_duration)
     
-    #time.sleep(sleep_duration)
-    #button = driver.find_element(by="xpath", value='//*[@id="search-content-area"]/div/div[1]/div[1]/div[1]/div[2]/span[2]/')
-    #button.click()
+    time.sleep(sleep_duration)
+    button = driver.find_element(by="xpath", value='//*[@id="search-content-area"]/div/div[1]/div[1]/div[1]/div[2]/span[2]/')
+    button.click()
+    driver.switchTo().defaultContent()
 
 # #找到视频按钮
 # time.sleep(2)
@@ -71,7 +72,13 @@ if __name__ == "__main__":
     options = ChromeOptions()
     #options.add_argument("--headless=new")
     options.add_experimental_option("detach", True)
-    driver = Chrome(options=options)
+    chromedriver_path = './chromedriver'
+
+    # Set up the service with the path to the chromedriver
+    service = Service(executable_path=chromedriver_path)
+
+    # Pass the service object to the Chrome driver
+    driver = Chrome(service=service, options=options)
     url = url
     action = ActionChains(driver)
     driver.get(url)
