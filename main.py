@@ -42,8 +42,8 @@ def click_on_captcha(driver, action, coordininates):
         sleep_duration = random.uniform(1, 1.5)
         time.sleep(sleep_duration)
     
-    time.sleep(sleep_duration)
-    button = driver.find_element(by="xpath", value='//*[@id="search-content-area"]/div/div[1]/div[1]/div[1]/div[2]/span[2]/')
+    time.sleep(3)
+    button = driver.find_element(by="xpath", value='//*[@id="vc_captcha_box"]/div/div/div[3]/div[2]/div')
     button.click()
     driver.switchTo().defaultContent()
 
@@ -72,13 +72,9 @@ if __name__ == "__main__":
     options = ChromeOptions()
     #options.add_argument("--headless=new")
     options.add_experimental_option("detach", True)
-    chromedriver_path = './chromedriver'
-
-    # Set up the service with the path to the chromedriver
-    service = Service(executable_path=chromedriver_path)
-
+   
     # Pass the service object to the Chrome driver
-    driver = Chrome(service=service, options=options)
+    driver = Chrome(options=options)
     url = url
     action = ActionChains(driver)
     driver.get(url)
