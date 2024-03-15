@@ -7,6 +7,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time 
+import os
 from utils.ttshitu import base64_api
 import base64
 import json
@@ -45,16 +46,12 @@ def click_on_captcha(driver, action, coordininates):
     time.sleep(3)
     button = driver.find_element(by="xpath", value='//*[@id="vc_captcha_box"]/div/div/div[3]/div[2]/div')
     button.click()
-    driver.switchTo().defaultContent()
+    driver.switch_to.default_content()
 
-# #找到视频按钮
-# time.sleep(2)
-# button = driver.find_element(by="xpath", value='//*[@id="search-content-area"]/div/div[1]/div[1]/div[1]/div[2]/span[2]')
-# button.click()
-
-
-# html = driver.page_source
-# soup = BeautifulSoup(html, 'html.parser')
+def get_page_html(driver):
+    html = driver.page_source
+    soup = BeautifulSoup(html, 'html.parser')
+    return soup
 
 # # Get the total number of sections
 # # 'MgWTwktU search-result-card B9KMVC9A'
@@ -72,7 +69,7 @@ if __name__ == "__main__":
     options = ChromeOptions()
     #options.add_argument("--headless=new")
     options.add_experimental_option("detach", True)
-   
+    
     # Pass the service object to the Chrome driver
     driver = Chrome(options=options)
     url = url
@@ -87,6 +84,11 @@ if __name__ == "__main__":
     
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="captcha_click_image"]')))
     click_on_captcha(driver, action, coordininates=coords)
+
+    soup = get_page_html(driver)
+    print(soup)
+
+    seed_list = []
 
 
     
