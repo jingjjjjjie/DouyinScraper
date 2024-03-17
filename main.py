@@ -14,7 +14,6 @@ import json
 import requests
 import random
 
-
 def base64_api(uname, pwd, img, typeid):
     data = {"username": uname, "password": pwd, "typeid": typeid, "image": img, "remark": "点击两个形状相同的物体"}
     result = json.loads(
@@ -63,9 +62,18 @@ def get_page_html(driver):
 # for index, note_section in enumerate(note_sections, start=1):
 #     print(index)
 
+def scroll(driver, count):
+    scroll_size = 400
+    c = 0
+    while c < count:
+        driver.execute_script('window.scrollTo(0, arguments[0]);', scroll_size)
+        scroll_size += 400
+        c+=1
+        time.sleep(1)
 
 if __name__ == "__main__":
-    url = "https://www.douyin.com/search/%E5%90%AC%E5%88%B0%E6%98%A5%E5%A4%A9%E7%9A%84%E6%B6%88%E6%81%AF?publish_time=0&sort_type=0&type=video"
+    #url = "https://www.douyin.com/search/%E5%90%AC%E5%88%B0%E6%98%A5%E5%A4%A9%E7%9A%84%E6%B6%88%E6%81%AF?publish_time=0&sort_type=0&type=video"
+    url = "https://www.douyin.com/search/%E6%88%91%E5%9B%BD%E6%98%A5%E8%80%95%E5%A4%87%E8%80%95%E7%94%B1%E5%8D%97%E5%90%91%E5%8C%97%E5%B1%95%E5%BC%80?publish_time=0&sort_type=0&type=video"
     options = ChromeOptions()
     #options.add_argument("--headless=new")
     options.add_experimental_option("detach", True)
@@ -76,19 +84,50 @@ if __name__ == "__main__":
     action = ActionChains(driver)
     driver.get(url)
     
-    time.sleep(2)
+    time.sleep(5)
     img_screenshot_64 = switch_iframe_and_screenshot(driver)
 
-    time.sleep(5)
+    time.sleep(1)
     coords = base64_api(uname='jingjjjjjie', pwd='Beida123', img=img_screenshot_64, typeid=27)
     
     WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, '//*[@id="captcha_click_image"]')))
     click_on_captcha(driver, action, coordininates=coords)
 
-    soup = get_page_html(driver)
-    print(soup)
+    time.sleep(5)
+    scroll(driver,count=20)
+
+    time.sleep(10)
+    soup = BeautifulSoup(driver.page_source, 'html.parser')
+
+    # Open a file for writing (this will create the file if it doesn't exist)
+    with open('output.txt', 'w') as file:
+        # Write the text to the file
+        file.write(str(soup))
 
     seed_list = []
 
+    sections = soup.find_all('li', class_ ="MgWTwktU search-result-card B9KMVC9A")
+    print(len(sections))
 
-    
+    for section in sections:
+        # Initialize an empty dictionary to store data for each section
+        data = {}
+
+        # Extract the href attribute from the <a> tag
+        a_tag = section.find('a', class_='B3AsdZT9 AqS8FEQL')
+        if a_tag and 'href' in a_tag.attrs:
+            data['url'] = 'https:' + a_tag['href']
+
+        # Extract the specific div text you're interested in
+        specific_div = section.find('div', class_='swoZuiEM')
+        if specific_div:
+            data['description'] = specific_div.get_text(strip=True)
+
+        data['heji'] = '合集' in section.text
+
+        # Check if data was extracted and if so, append to the seed_list
+        if data:
+            seed_list.append(data)
+
+    # Optional: print or process the seed_list further
+    print(seed_list)
