@@ -13,6 +13,7 @@ import base64
 import json
 import requests
 import random
+import csv
 
 def base64_api(uname, pwd, img, typeid):
     data = {"username": uname, "password": pwd, "typeid": typeid, "image": img, "remark": "点击两个形状相同的物体"}
@@ -100,7 +101,7 @@ if __name__ == "__main__":
     soup = BeautifulSoup(driver.page_source, 'html.parser')
 
     # Open a file for writing (this will create the file if it doesn't exist)
-    with open('output.txt', 'w') as file:
+    with open('./output.txt', 'w') as file:
         # Write the text to the file
         file.write(str(soup))
 
@@ -131,3 +132,20 @@ if __name__ == "__main__":
 
     # Optional: print or process the seed_list further
     print(seed_list)
+
+    # Define the fieldnames based on the dictionary keys
+# Assuming all dictionaries have the same structure
+    fieldnames = seed_list[0].keys() if seed_list else []
+
+    # Write to CSV
+    with open("./outputs/seed.csv", mode='w', newline='', encoding='utf-8') as file:
+        writer = csv.DictWriter(file, fieldnames=fieldnames)
+
+        # Write the header
+        writer.writeheader()
+
+        # Write the rows
+        for seed in seed_list:
+            writer.writerow(seed)
+
+    print(f"Data successfully written to {seed.csv}")
