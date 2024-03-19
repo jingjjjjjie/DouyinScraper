@@ -1,3 +1,5 @@
-**/chromedriver
-**/chromedriver.exe
-**/utils/
+output.txt
+__pycache__/
+ttshitu.py
+seed.csv
+outputs/

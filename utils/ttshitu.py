@@ -17,7 +17,6 @@ def base64_api(uname, pwd, img, typeid):
   
 
 if __name__ == "__main__":
-    img_path = "C:/Users/Administrator/Desktop/file.jpg"
     result = base64_api(uname='jingjjjjjie', pwd='Beida123', img="./image.png", typeid=27)
     print(result)
     
