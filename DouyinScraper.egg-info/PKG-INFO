@@ -1,0 +1,10 @@
+Metadata-Version: 2.1
+Name: DouyinScraper
+Version: 1.0
+Summary: Douyin Scraper
+Author: Jason Ma
+Keywords: douyin,scraper
+Requires-Python: >=3.8
+Requires-Dist: selenium==4.0.0
+Requires-Dist: beautifulsoup4==4.12.3
+Requires-Dist: requests==2.31.0

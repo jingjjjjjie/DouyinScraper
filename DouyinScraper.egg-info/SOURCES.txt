@@ -1,0 +1,7 @@
+README.md
+setup.py
+DouyinScraper.egg-info/PKG-INFO
+DouyinScraper.egg-info/SOURCES.txt
+DouyinScraper.egg-info/dependency_links.txt
+DouyinScraper.egg-info/requires.txt
+DouyinScraper.egg-info/top_level.txt

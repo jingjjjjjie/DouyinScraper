@@ -69,10 +69,10 @@ if __name__ == "__main__":
     options = ChromeOptions()
     #options.add_argument("--headless=new")
     options.add_experimental_option("detach", True)
-    
+    chrome_driver_path = './chromedriver'
+    service = Service(chrome_driver_path)
     # Pass the service object to the Chrome driver
-    driver = Chrome(options=options)
-    url = url
+    driver = Chrome(options=options, service=service)
     action = ActionChains(driver)
     driver.get(url)
     
