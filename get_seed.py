@@ -95,7 +95,7 @@ if __name__ == "__main__":
     click_on_captcha(driver, action, coordininates=coords)
 
     time.sleep(5)
-    scroll(driver,count=20)
+    scroll(driver,count=100)
 
     time.sleep(10)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
@@ -124,8 +124,6 @@ if __name__ == "__main__":
         if specific_div:
             data['description'] = specific_div.get_text(strip=True)
 
-        data['heji'] = '合集' in section.text
-
         # Check if data was extracted and if so, append to the seed_list
         if data:
             seed_list.append(data)
@@ -148,4 +146,4 @@ if __name__ == "__main__":
         for seed in seed_list:
             writer.writerow(seed)
 
-    print(f"Data successfully written to {seed.csv}")
+    print(f"Data successfully written to seed.csv")
