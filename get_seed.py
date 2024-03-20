@@ -95,7 +95,7 @@ if __name__ == "__main__":
     click_on_captcha(driver, action, coordininates=coords)
 
     time.sleep(5)
-    scroll(driver,count=100)
+    scroll(driver,count=200)
 
     time.sleep(10)
     soup = BeautifulSoup(driver.page_source, 'html.parser')
