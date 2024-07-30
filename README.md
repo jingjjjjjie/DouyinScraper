@@ -1,6 +1,6 @@
 
 # Douyin Scraper
-
+*discontinued due to douyin web's security upgrade*
 To get started using this API follow the instructions below.
 
 ## Note
