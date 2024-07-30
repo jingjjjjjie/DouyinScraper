@@ -1,7 +1,7 @@
 
 # Douyin Scraper
 *discontinued due to douyin web's security upgrade*
-To get started using this API follow the instructions below.
+
 
 ## Note
 You need to have a correct version of chromedriver in your corresponding python interpreter path for the script to work.
